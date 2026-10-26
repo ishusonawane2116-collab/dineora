@@ -1,0 +1,758 @@
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap');
+
+:root { font-family: 'DM Sans', sans-serif; color: #172033; background: #f4f6fa; font-synthesis: none; text-rendering: optimizeLegibility; }
+* { box-sizing: border-box; }
+body { margin: 0; min-width: 320px; min-height: 100vh; }
+button, input { font: inherit; }
+button { cursor: pointer; }
+button:disabled { cursor: not-allowed; opacity: .55; }
+.app-shell { min-height: 100vh; background: radial-gradient(circle at 8% 10%, #fff 0, #f4f6fa 45%, #edf1f7 100%); }
+.topbar { height: 86px; display: flex; align-items: center; justify-content: space-between; padding: 0 max(5vw, 24px); border-bottom: 1px solid #e7eaf0; background: rgba(255,255,255,.78); }
+.brand { display: flex; gap: 12px; align-items: center; text-decoration: none; color: #182238; font-family: Manrope, sans-serif; font-weight: 800; font-size: 20px; letter-spacing: -.6px; }
+.brand b { color: #e87845; }
+.brand small { display: block; margin-top: 3px; font: 700 9px 'DM Sans', sans-serif; letter-spacing: 1.8px; color: #8790a1; }
+.brand-mark { width: 43px; height: 43px; display: grid; place-items: center; color: white; background: #17243a; border-radius: 14px; box-shadow: 0 6px 14px #17243a22; }
+.topbar-status { color: #667085; font-size: 10px; font-weight: 700; letter-spacing: 1.3px; display: flex; align-items: center; gap: 8px; }
+.status-dot { width: 7px; height: 7px; display: inline-block; background: #35b879; border-radius: 50%; }
+.main-layout { width: min(1160px, 90vw); margin: 58px auto 48px; display: grid; grid-template-columns: .9fr 1.1fr; gap: clamp(30px, 6vw, 82px); align-items: center; }
+.intro-panel { padding: 12px 0; }
+.eyebrow { display: inline-flex; align-items: center; gap: 7px; border: 1px solid #f4d7c7; background: #fff7f2; color: #bd6036; border-radius: 99px; padding: 8px 12px; font-size: 10px; font-weight: 700; letter-spacing: 1.1px; }
+h1 { font-family: Manrope, sans-serif; font-size: clamp(36px, 4vw, 53px); line-height: 1.15; letter-spacing: -2.4px; margin: 24px 0 18px; color: #19243a; }
+h1 span { color: #dc7548; }
+.intro-copy { color: #6d7688; line-height: 1.8; font-size: 15px; max-width: 420px; margin-bottom: 34px; }
+.feature-list { display: grid; gap: 21px; }
+.feature { display: flex; align-items: center; gap: 14px; }
+.feature > span { display: grid; place-items: center; width: 43px; height: 43px; border-radius: 13px; color: #d36f43; background: white; border: 1px solid #f0e6e0; }
+.feature b, .feature small { display: block; }
+.feature b { font-size: 13px; margin-bottom: 4px; }
+.feature small { font-size: 12px; color: #828b9a; }
+.note-card { display: flex; align-items: flex-start; gap: 11px; margin-top: 34px; border: 1px solid #e4e8ef; border-radius: 14px; background: #ffffffa8; padding: 15px; color: #788294; font-size: 11px; line-height: 1.7; }
+.note-card svg { color: #dc7548; flex-shrink: 0; margin-top: 2px; }
+.note-card b { color: #364156; }
+.chat-card { background: white; border: 1px solid #e5e9f0; border-radius: 22px; overflow: hidden; box-shadow: 0 24px 70px #1b2a4412; min-height: 640px; display: flex; flex-direction: column; }
+.chat-header { height: 82px; padding: 0 22px; display: flex; align-items: center; gap: 12px; border-bottom: 1px solid #edf0f5; }
+.assistant-avatar { display: grid; place-items: center; color: white; background: #1b2940; border-radius: 13px; width: 43px; height: 43px; }
+.chat-heading { flex: 1; }
+.chat-heading b { font-size: 14px; display: block; }
+.chat-heading small { color: #8992a1; font-size: 11px; display: flex; align-items: center; gap: 6px; margin-top: 5px; }
+.icon-button { border: 0; background: #f4f6f9; color: #6d7789; border-radius: 10px; width: 36px; height: 36px; display: grid; place-items: center; }
+.chat-body { padding: 23px 20px 8px; flex: 1; min-height: 205px; max-height: 360px; overflow-y: auto; }
+.date-label, .suggestion-title { display: block; color: #a0a8b6; font-size: 9px; letter-spacing: 1.3px; font-weight: 700; text-align: center; margin: 0 0 23px; }
+.message-row { display: flex; align-items: flex-start; gap: 8px; margin-bottom: 16px; }
+.user-row { justify-content: flex-end; }
+.mini-avatar { width: 27px; height: 27px; flex-shrink: 0; border-radius: 9px; background: #f4e6df; color: #c76b42; display: grid; place-items: center; }
+.bubble { padding: 12px 14px; font-size: 12px; line-height: 1.7; max-width: 86%; white-space: pre-wrap; overflow-wrap: anywhere; }
+.assistant-bubble { background: #f4f6f9; color: #465166; border-radius: 4px 14px 14px 14px; }
+.user-bubble { background: #1b2940; color: white; border-radius: 14px 4px 14px 14px; }
+.typing span { display: inline-block; margin-left: 8px; letter-spacing: 2px; color: #dc7548; }
+.suggestions { padding: 5px 22px 17px; display: grid; gap: 8px; }
+.suggestions .suggestion-title { text-align: left; margin: 0 0 3px; }
+.suggestions button { display: flex; justify-content: space-between; align-items: center; gap: 10px; text-align: left; border: 1px solid #e8ebf1; border-radius: 10px; background: white; padding: 10px 12px; font-size: 11px; color: #5e687a; transition: border-color .15s, background .15s; }
+.suggestions button:hover { border-color: #e5a082; background: #fffaf7; }
+.suggestions button span { color: #d87548; font-size: 15px; }
+.composer { display: flex; gap: 10px; padding: 14px 16px; margin: 0 16px; border: 1px solid #e4e8ef; border-radius: 14px; background: #fafbfc; }
+.composer input { flex: 1; min-width: 0; border: 0; outline: 0; background: transparent; color: #263249; font-size: 12px; }
+.composer input::placeholder { color: #a1a8b5; }
+.composer button { width: 38px; height: 38px; border: 0; border-radius: 11px; display: grid; place-items: center; color: white; background: #df784b; }
+.privacy-note { padding: 13px 12px 16px; display: flex; align-items: center; justify-content: center; gap: 5px; color: #9aa2af; font-size: 9px; }
+.privacy-note svg { color: #49a879; }
+.error-message { margin: 0 20px 12px; padding: 10px 12px; border-radius: 10px; background: #fff1f0; color: #a8332b; font-size: 11px; line-height: 1.5; }
+footer { padding: 22px; text-align: center; color: #a0a8b5; font-size: 9px; letter-spacing: 1.7px; font-weight: 700; }
+footer span { padding: 0 8px; color: #df784b; }
+@media (max-width: 850px) { .main-layout { grid-template-columns: 1fr; width: min(600px, 92vw); margin-top: 30px; gap: 28px; } .intro-panel { padding: 0; } h1 { font-size: clamp(36px, 8vw, 48px); } .feature-list { grid-template-columns: 1fr; } .note-card { margin-top: 22px; } .chat-card { min-height: 600px; } }
+@media (max-width: 480px) { .topbar { height: 72px; padding: 0 17px; } .brand { font-size: 17px; } .brand-mark { width: 38px; height: 38px; } .topbar-status { font-size: 8px; letter-spacing: .7px; } .chat-header { padding: 0 15px; } .chat-body { padding: 18px 13px 8px; } .suggestions { padding: 5px 14px 15px; } .composer { margin: 0 10px; } }
+
+/* Reservation demo */
+html {
+  scroll-behavior: smooth;
+}
+
+.topbar-actions {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+}
+
+.book-nav-button,
+.intro-book-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  border: 0;
+  border-radius: 11px;
+  padding: 12px 16px;
+  background: #df784b;
+  color: white;
+  font-weight: 700;
+  font-size: 12px;
+  transition: background 0.2s, transform 0.2s;
+}
+
+.book-nav-button:hover,
+.intro-book-button:hover,
+.submit-reservation:hover {
+  background: #c96338;
+  transform: translateY(-1px);
+}
+
+.intro-book-button {
+  margin-top: 25px;
+}
+
+.reservation-section {
+  width: min(1160px, 90vw);
+  margin: 30px auto 70px;
+  scroll-margin-top: 25px;
+}
+
+.reservation-heading {
+  text-align: center;
+  max-width: 620px;
+  margin: 0 auto 30px;
+}
+
+.reservation-heading .eyebrow {
+  margin-bottom: 8px;
+}
+
+.reservation-heading h2 {
+  margin: 12px 0;
+  font-family: Manrope, sans-serif;
+  font-size: clamp(32px, 4vw, 44px);
+  letter-spacing: -1.5px;
+  color: #19243a;
+}
+
+.reservation-heading h2 span {
+  color: #dc7548;
+}
+
+.reservation-heading > p {
+  color: #6d7688;
+  font-size: 14px;
+  line-height: 1.8;
+}
+
+.reservation-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1.15fr) minmax(0, 0.85fr);
+  gap: 24px;
+  align-items: start;
+}
+
+.reservation-card {
+  min-width: 0;
+  padding: clamp(18px, 3vw, 30px);
+  border: 1px solid #e5e9f0;
+  border-radius: 20px;
+  background: #fff;
+  box-shadow: 0 18px 50px #1b2a440b;
+}
+
+.reservation-card h3 {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 0;
+  color: #1b2940;
+  font-family: Manrope, sans-serif;
+  font-size: 19px;
+}
+
+.reservation-card h3 svg {
+  color: #dc7548;
+  flex-shrink: 0;
+}
+
+.form-description {
+  margin: 8px 0 22px;
+  color: #8992a1;
+  font-size: 12px;
+  line-height: 1.6;
+}
+
+.reservation-fields {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 18px 14px;
+}
+
+.reservation-fields label {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  color: #465166;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.reservation-fields input,
+.reservation-fields select,
+.reservation-fields textarea {
+  width: 100%;
+  min-width: 0;
+  border: 1px solid #dfe4ec;
+  border-radius: 10px;
+  padding: 12px;
+  background: #fafbfc;
+  color: #263249;
+  outline: none;
+  font-size: 13px;
+  font-weight: 400;
+}
+
+.reservation-fields input:focus,
+.reservation-fields select:focus,
+.reservation-fields textarea:focus {
+  border-color: #df784b;
+  box-shadow: 0 0 0 3px #df784b1c;
+}
+
+.reservation-fields textarea {
+  resize: vertical;
+  line-height: 1.6;
+}
+
+.reservation-fields .full-width {
+  grid-column: 1 / -1;
+}
+
+.submit-reservation {
+  display: flex;
+  width: 100%;
+  align-items: center;
+  justify-content: center;
+  gap: 9px;
+  margin-top: 22px;
+  padding: 14px;
+  border: 0;
+  border-radius: 11px;
+  background: #df784b;
+  color: white;
+  font-size: 13px;
+  font-weight: 700;
+  transition: background 0.2s, transform 0.2s;
+}
+
+.demo-disclaimer {
+  margin: 13px 0 0;
+  color: #8992a1;
+  font-size: 11px;
+  line-height: 1.7;
+  text-align: center;
+}
+
+.booking-error,
+.booking-success {
+  display: flex;
+  align-items: flex-start;
+  gap: 9px;
+  margin: 17px 0 0;
+  padding: 12px;
+  border-radius: 10px;
+  font-size: 12px;
+  line-height: 1.6;
+  overflow-wrap: anywhere;
+}
+
+.booking-error {
+  background: #fff1f0;
+  color: #a8332b;
+}
+
+.booking-success {
+  background: #edf9f1;
+  color: #216b43;
+}
+
+.booking-success svg {
+  flex-shrink: 0;
+  margin-top: 1px;
+}
+
+.bookings-title {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.bookings-title .form-description {
+  margin-bottom: 0;
+}
+
+.booking-count {
+  display: grid;
+  min-width: 32px;
+  height: 32px;
+  place-items: center;
+  border-radius: 10px;
+  background: #fff2ea;
+  color: #c96338;
+  font-size: 13px;
+  font-weight: 800;
+}
+
+.empty-bookings {
+  display: flex;
+  min-height: 250px;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 28px 15px;
+  text-align: center;
+  color: #8992a1;
+}
+
+.empty-bookings svg {
+  margin-bottom: 15px;
+  color: #d9a28b;
+}
+
+.empty-bookings b {
+  color: #364156;
+  font-size: 14px;
+}
+
+.empty-bookings p {
+  max-width: 240px;
+  font-size: 12px;
+  line-height: 1.8;
+}
+
+.booking-list {
+  display: grid;
+  gap: 14px;
+  margin-top: 22px;
+}
+
+.booking-item {
+  min-width: 0;
+  padding: 16px;
+  border: 1px solid #e8ebf1;
+  border-radius: 13px;
+  background: #fcfcfd;
+}
+
+.booking-item-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+
+.booking-reference {
+  color: #b96340;
+  font-size: 10px;
+  font-weight: 800;
+  overflow-wrap: anywhere;
+}
+
+.demo-status {
+  padding: 5px 7px;
+  border-radius: 6px;
+  background: #fff0e8;
+  color: #b96340;
+  font-size: 9px;
+  font-weight: 800;
+}
+
+.booking-item h4 {
+  margin: 0 0 12px;
+  color: #263249;
+  font-size: 15px;
+}
+
+.booking-item > p {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  margin: 8px 0;
+  color: #697386;
+  font-size: 11px;
+  line-height: 1.6;
+  overflow-wrap: anywhere;
+}
+
+.booking-item > p svg {
+  flex-shrink: 0;
+  margin-top: 1px;
+  color: #d87548;
+}
+
+.booking-item > .booking-request {
+  display: block;
+  padding: 9px;
+  border-radius: 8px;
+  background: #f4f6f9;
+}
+
+.remove-booking {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  margin-top: 10px;
+  padding: 8px 10px;
+  border: 1px solid #f0d9d4;
+  border-radius: 8px;
+  background: white;
+  color: #ad4c3d;
+  font-size: 11px;
+  font-weight: 700;
+}
+
+.remove-booking:hover {
+  background: #fff1f0;
+}
+
+@media (max-width: 850px) {
+  .reservation-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .reservation-section {
+    width: min(600px, 92vw);
+  }
+}
+
+@media (max-width: 480px) {
+  .topbar-actions {
+    gap: 9px;
+  }
+
+  .topbar-status {
+    display: none;
+  }
+
+  .book-nav-button {
+    padding: 10px;
+    font-size: 11px;
+  }
+
+  .reservation-fields {
+    grid-template-columns: 1fr;
+  }
+
+  .reservation-fields .full-width {
+    grid-column: auto;
+  }
+
+  .reservation-card {
+    padding: 18px;
+  }
+}
+
+
+/* TableTalk AI — warm restaurant theme */
+:root {
+  color: #353c30;
+  background: #f7f4ec;
+}
+
+body {
+  background: #f7f4ec;
+  color: #353c30;
+}
+
+.app-shell {
+  background: linear-gradient(
+    135deg,
+    #faf8f1 0%,
+    #f2eee3 100%
+  );
+}
+
+.topbar {
+  background: rgba(250, 248, 241, 0.94);
+  border-bottom-color: #e5e0d3;
+}
+
+.brand {
+  color: #354337;
+}
+
+.brand b {
+  color: #87977a;
+}
+
+.brand-mark,
+.assistant-avatar {
+  background: #52664f;
+}
+
+.topbar-status .status-dot {
+  background: #819875;
+}
+
+.eyebrow {
+  background: #edf0e5;
+  border-color: #dce3d3;
+  color: #596d50;
+}
+
+h1,
+.reservation-heading h2 {
+  color: #354337;
+}
+
+h1 span,
+.reservation-heading h2 span {
+  color: #87977a;
+}
+
+.intro-copy,
+.feature small {
+  color: #77796d;
+}
+
+.feature > span {
+  background: #eeefe5;
+  border-color: #e0e3d6;
+  color: #667a5c;
+}
+
+.note-card {
+  background: #fdfbf5;
+  border-color: #e4dfd2;
+}
+
+.note-card svg {
+  color: #819475;
+}
+
+.chat-card,
+.reservation-card {
+  background: #fffdf7;
+  border-color: #e5e0d3;
+  box-shadow: 0 20px 55px #39453112;
+}
+
+.chat-header {
+  border-bottom-color: #eee9dd;
+}
+
+.assistant-bubble {
+  background: #f0f0e7;
+  color: #465044;
+}
+
+.user-bubble {
+  background: #52664f;
+}
+
+.suggestions button {
+  background: #fffdf7;
+  border-color: #e4e2d6;
+  color: #555d4f;
+}
+
+.suggestions button:hover {
+  border-color: #a7b49b;
+  background: #f3f4eb;
+}
+
+.suggestions button span {
+  color: #718567;
+}
+
+.composer {
+  background: #faf8f1;
+  border-color: #e3dfd2;
+}
+
+.composer button,
+.book-nav-button,
+.intro-book-button,
+.submit-reservation {
+  background: #657b5d;
+}
+
+.composer button:hover,
+.book-nav-button:hover,
+.intro-book-button:hover,
+.submit-reservation:hover {
+  background: #4c6246;
+}
+
+.reservation-heading h2 {
+  color: #354337;
+}
+
+.reservation-fields input:focus,
+.reservation-fields select:focus,
+.reservation-fields textarea:focus {
+  border-color: #87977a;
+  box-shadow: 0 0 0 3px #87977a20;
+}
+
+.booking-count {
+  background: #edf0e5;
+  color: #52664f;
+}
+
+.booking-reference {
+  color: #657b5d;
+}
+
+.demo-status {
+  background: #edf0e5;
+  color: #52664f;
+}
+
+@media (max-width: 850px) {
+  .main-layout {
+    margin-top: 30px;
+  }
+}
+/* TableTalk AI new homepage colors */
+:root {
+  font-family: "DM Sans", sans-serif;
+  color: #29372f;
+  background: #f7f4ec;
+}
+
+body,
+.app-shell {
+  background: #f7f4ec;
+  color: #29372f;
+}
+
+.topbar {
+  background: #faf8f1;
+  border-bottom: 1px solid #e5e0d3;
+}
+
+.brand {
+  color: #354337;
+}
+
+.brand b {
+  color: #657b5d;
+}
+
+.brand-mark,
+.assistant-avatar {
+  background: #40594b;
+}
+
+.book-nav-button,
+.intro-book-button,
+.submit-reservation,
+.composer button {
+  background: #40594b;
+}
+
+h1,
+.reservation-heading h2 {
+  color: #29372f;
+  font-family: Georgia, "Times New Roman", serif;
+  font-weight: 400;
+}
+
+h1 span,
+.reservation-heading h2 span {
+  color: #526b58;
+}
+
+.chat-card,
+.reservation-card {
+  background: #fffdf7;
+  border-color: #e5e0d3;
+}
+
+.user-bubble {
+  background: #40594b;
+}
+/* TableTalk AI new homepage colors */
+:root {
+  font-family: "DM Sans", sans-serif;
+  color: #29372f;
+  background: #f7f4ec;
+}
+
+body,
+.app-shell {
+  background: #f7f4ec;
+  color: #29372f;
+}
+
+.topbar {
+  background: #faf8f1;
+  border-bottom: 1px solid #e5e0d3;
+}
+
+.brand {
+  color: #354337;
+}
+
+.brand b {
+  color: #657b5d;
+}
+
+.brand-mark,
+.assistant-avatar {
+  background: #40594b;
+}
+
+.book-nav-button,
+.intro-book-button,
+.submit-reservation,
+.composer button {
+  background: #40594b;
+}
+
+h1,
+.reservation-heading h2 {
+  color: #29372f;
+  font-family: Georgia, "Times New Roman", serif;
+  font-weight: 400;
+}
+
+h1 span,
+.reservation-heading h2 span {
+  color: #526b58;
+}
+
+.chat-card,
+.reservation-card {
+  background: #fffdf7;
+  border-color: #e5e0d3;
+}
+
+.user-bubble {
+  background: #40594b;
+}
+/* Visible restaurant background photo */
+html,
+body,
+#root {
+  min-height: 100%;
+}
+
+.app-shell {
+  background-image:
+    linear-gradient(
+      rgba(250, 248, 241, 0.35),
+      rgba(250, 248, 241, 0.35)
+    ),
+    url("https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=1920&q=85") !important;
+  background-size: cover !important;
+  background-position: center !important;
+  background-attachment: fixed !important;
+  background-repeat: no-repeat !important;
+}
+/* TableTalk AI restaurant background */
+.app-shell {
+  background-image:
+    linear-gradient(
+      rgba(250, 248, 241, 0.45),
+      rgba(250, 248, 241, 0.45)
+    ),
+    url("/restaurant-bg.png") !important;
+  background-size: cover !important;
+  background-position: center !important;
+  background-repeat: no-repeat !important;
+  background-attachment: fixed !important;
+}
